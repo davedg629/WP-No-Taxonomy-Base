@@ -4,8 +4,7 @@
 Plugin Name: WP No Taxonomy Base
 Plugin URI: 
 Description: Remove base slug from your custom taxonomy terms.
-Author: Luke Thomas, David DiGiovanni
-Author URI: https://twitter.com//luk3thomas
+Author: <a href="http://twitter.com/luk3thomas">@luk3thomas</a> & <a href="http://twitter.com/DavidDiGiovanni">@DavidDiGiovanni</a>
 Version: 1.0
 */
 
