@@ -37,7 +37,6 @@ class WP_No_Taxonomy_Base {
 
     add_filter('category_rewrite_rules' , array($this , 'add_rules'   )  ) ;
 
-
   }
 
   public function flush_rules() {
@@ -132,41 +131,41 @@ class WP_No_Taxonomy_Base {
 
     <p>Want to remove the base for a taxonomy? Just select the taxonomy below and click "Save".</p>
 
+    <form method="post">
+
+      <input type="hidden" name="vesave" value="save" />
+
+      <table>
+
+      <?php 
+        
+        foreach( $taxonomies as $taxonomy ) {
+
+          $active = in_array($taxonomy, $selected) ? 'checked="checked"' : '';
+
+          printf(
+          '
+            <tr>
+              <td> <label>%s</label> </td>
+              <td> <input type="checkbox" name="WP_No_Taxonomy_Base[]" value="%s" %s /> </td>
+            </tr>
+          '
+          , $taxonomy
+          , $taxonomy
+          , $active
+          );
+
+        }
+      
+      ?>
+
+      </table>
+
+      <button class="button-primary">Save</button>
+
+    </form>
+
   </div>
-
-  <form method="post">
-
-    <input type="hidden" name="vesave" value="save" />
-
-    <table>
-
-  <?php 
-    
-    foreach( $taxonomies as $taxonomy ) {
-
-      $active = in_array($taxonomy, $selected) ? 'checked="checked"' : '';
-
-      printf(
-      '
-        <tr>
-          <td> <label>%s</label> </td>
-          <td> <input type="checkbox" name="WP_No_Taxonomy_Base[]" value="%s" %s /> </td>
-        </tr>
-      '
-      , $taxonomy
-      , $taxonomy
-      , $active
-      );
-
-    }
-  
-  ?>
-
-    </table>
-
-    <button class="button-primary">Save</button>
-
-  </form>
 
   <?php
 
