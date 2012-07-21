@@ -46,7 +46,7 @@ class WP_No_Taxonomy_Base {
 
   }
 
-  public function add_rules() {
+  public function add_rules($rules) {
 
     /**
      * @todo 
@@ -63,7 +63,7 @@ class WP_No_Taxonomy_Base {
 
     /** Time to bail. */
     if(!$taxonomies)
-      return array();
+      return $rules;
 
     $rules = array();
     $args  = array('hide_empty' => false);
