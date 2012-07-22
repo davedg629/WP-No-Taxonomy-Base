@@ -34,8 +34,10 @@ class WP_No_Taxonomy_Base {
     add_action('created_category'       , array($this , 'flush_rules' )  ) ;
     add_action('delete_category'        , array($this , 'flush_rules' )  ) ;
     add_action('edited_category'        , array($this , 'flush_rules' )  ) ;
+    add_action('init'                   , array($this , 'redirect'    )  ) ;
 
     add_filter('category_rewrite_rules' , array($this , 'add_rules'   )  ) ;
+
 
   }
 
@@ -43,6 +45,38 @@ class WP_No_Taxonomy_Base {
 
     global $wp_rewrite;
     $wp_rewrite->flush_rules();
+
+  }
+
+  public function redirect() {
+    $request    = $_SERVER['REQUEST_URI'];
+    $host       = $_SERVER['HTTP_HOST'];
+    $redirect   = false;
+    $blogurl    = get_bloginfo('url');
+    $taxonomies = get_option('WP_No_Taxonomy_Base');
+    $http       = ( strrpos($blogurl, 'https://') === false ) ? 'http://' : 'https://';
+
+    /** build the URL */
+    $url = $http . $host . $request;
+
+    foreach( $taxonomies as $term ) {
+
+      /**
+       * If the url contains a taxonomy term base
+       * then redirect it to the new page.
+       * Only redirect one time.
+       * -------------------------------------------- */
+      if( strrpos($url, '/' . $term . '/') && !$redirect) {
+
+        $new_url = str_replace('/' . $term . '/', '/', $url);
+
+        wp_redirect($new_url, 301);
+
+        $redirect = true;
+
+      }
+
+    }
 
   }
 
@@ -65,7 +99,7 @@ class WP_No_Taxonomy_Base {
     if(!$taxonomies)
       return $rules;
 
-    $rules = array();
+
     $args  = array('hide_empty' => false);
 
     /**
