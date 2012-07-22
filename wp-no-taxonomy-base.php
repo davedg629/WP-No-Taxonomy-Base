@@ -56,6 +56,10 @@ class WP_No_Taxonomy_Base {
     $taxonomies = get_option('WP_No_Taxonomy_Base');
     $http       = ( strrpos($blogurl, 'https://') === false ) ? 'http://' : 'https://';
 
+    /** Bail */
+    if(!$taxonomies)
+      return false;
+
     /** build the URL */
     $url = $http . $host . $request;
 
